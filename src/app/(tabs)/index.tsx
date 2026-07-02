@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { ScrollView, RefreshControl, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MockApi } from '../../services/mockApi';
 import { Movie, Category } from '../../types';
 import { HeroBanner } from '../../components/HeroBanner';
@@ -52,14 +52,15 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollView 
-      className="flex-1 bg-[#0f1014]"
-      contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="white" />
-      }
-      showsVerticalScrollIndicator={false}
-    >
+    <SafeAreaView edges={['top']} className="flex-1 bg-[#0f1014]">
+      <ScrollView 
+        className="flex-1"
+        contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="white" />
+        }
+        showsVerticalScrollIndicator={false}
+      >
       {loading || !hero ? (
         <View>
           <SkeletonLoader width="100%" height={400} />
@@ -85,6 +86,7 @@ export default function HomeScreen() {
           </View>
         </>
       )}
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

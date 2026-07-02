@@ -15,10 +15,7 @@ export default function RootLayout() {
             <Stack.Screen 
               name="detail/[id]" 
               options={{ 
-                headerShown: true, 
-                headerTransparent: true, 
-                title: '', 
-                headerTintColor: 'white'
+                headerShown: false
               }} 
             />
           </Stack>

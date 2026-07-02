@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Image } from 'expo-image';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MockApi } from '../../services/mockApi';
 import { UserProfile } from '../../types';
 import { SkeletonLoader } from '../../components/SkeletonLoader';
@@ -33,10 +33,11 @@ export default function ProfileScreen() {
   if (error) return <ErrorState message={error} onRetry={loadProfile} />;
 
   return (
-    <ScrollView 
-      className="flex-1 bg-[#0f1014]"
-      contentContainerStyle={{ paddingTop: insets.top + 20, paddingHorizontal: 16 }}
-    >
+    <SafeAreaView edges={['top']} className="flex-1 bg-[#0f1014]">
+      <ScrollView 
+        className="flex-1"
+        contentContainerStyle={{ paddingBottom: insets.bottom + 20, paddingHorizontal: 16 }}
+      >
       <Text className="text-white text-3xl font-bold mb-8">My Space</Text>
 
       {loading || !profile ? (
@@ -70,6 +71,7 @@ export default function ProfileScreen() {
           </View>
         </View>
       )}
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

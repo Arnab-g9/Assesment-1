@@ -57,7 +57,11 @@ export default function DetailScreen() {
   }
 
   return (
-    <ScrollView className="flex-1 bg-[#0f1014]" showsVerticalScrollIndicator={false}>
+    <ScrollView 
+      className="flex-1 bg-[#0f1014]" 
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
+    >
       {/* Sticky/Dynamic Header (Image Background) */}
       <View className="relative w-full" style={{ height: HEADER_HEIGHT }}>
         <Image
