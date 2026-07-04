@@ -1,3 +1,13 @@
+export interface Episode {
+  id: string;
+  title: string;
+  thumbnailUrl: string;
+  duration: string;
+  date: string;
+  seasonNum: number;
+  episodeNum: number;
+}
+
 export interface Movie {
   id: string;
   title: string;
@@ -9,6 +19,8 @@ export interface Movie {
   rating: string;
   duration: string;
   matchScore: number;
+  isSeries?: boolean;
+  episodes?: Episode[];
 }
 
 export interface Category {
@@ -23,4 +35,21 @@ export interface UserProfile {
   avatarUrl: string;
   email: string;
   premiumStatus: boolean;
+}
+
+export interface PromoBanner {
+  id: string;
+  title: string;
+  subtitle?: string;
+  backgroundColor: string;
+  imageUrl?: string;
+  actionText?: string;
+}
+
+export interface ProfileUser {
+  id: string;
+  name: string;
+  isKids?: boolean;
+  isAdd?: boolean;
+  avatarColors?: string[];
 }

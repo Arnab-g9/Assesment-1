@@ -1,32 +1,15 @@
 import { Tabs } from 'expo-router';
-import { Home, User, Search, Download } from 'lucide-react-native';
+import { CustomTabBar } from '../../components/CustomTabBar';
 
 export default function TabLayout() {
   return (
     <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          backgroundColor: '#000000',
-          borderTopWidth: 0,
-        },
-        tabBarActiveTintColor: '#ffffff',
-        tabBarInactiveTintColor: '#888888',
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <Home color={color} size={24} />,
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'My Space',
-          tabBarIcon: ({ color }) => <User color={color} size={24} />,
-        }}
-      />
+      tabBar={(props) => <CustomTabBar {...props} />}
+      screenOptions={{ headerShown: false }}
+    >
+      <Tabs.Screen name="search" />
+      <Tabs.Screen name="index" />
+      <Tabs.Screen name="profile" />
     </Tabs>
   );
 }

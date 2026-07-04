@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect, memo } from 'react';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -13,9 +13,10 @@ interface SkeletonProps {
   height?: number | string;
   borderRadius?: number;
   className?: string;
+  style?: ViewStyle;
 }
 
-export const SkeletonLoader = ({ width, height, borderRadius = 4, className }: SkeletonProps) => {
+export const SkeletonLoader = memo(({ width, height, style, borderRadius = 8, className }: SkeletonProps) => {
   const opacity = useSharedValue(0.3);
 
   useEffect(() => {
@@ -42,4 +43,4 @@ export const SkeletonLoader = ({ width, height, borderRadius = 4, className }: S
       ]}
     />
   );
-};
+});
