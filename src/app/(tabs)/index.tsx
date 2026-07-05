@@ -1,19 +1,18 @@
-import { useRouter } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
-import { RefreshControl, ScrollView, View, Text, TouchableOpacity } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Star, Play } from 'lucide-react-native';
-import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
+import { Star } from 'lucide-react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ContentRow } from '../../components/ContentRow';
 import { ContinueWatchingRow } from '../../components/ContinueWatchingRow';
-import { HeroCarousel } from '../../components/HeroCarousel';
 import { FloatingMenu } from '../../components/FloatingMenu';
+import { HeroCarousel } from '../../components/HeroCarousel';
 import { SkeletonLoader } from '../../components/SkeletonLoader';
 import { ErrorState } from '../../components/States';
+import { STRINGS } from '../../constants/strings';
 import { MockApi } from '../../services/mockApi';
 import { Category, Movie, UserProfile } from '../../types';
-import { STRINGS } from '../../constants/strings';
 
 export default function HomeScreen() {
   const [heroMovies, setHeroMovies] = useState<Movie[]>([]);
@@ -109,10 +108,10 @@ export default function HomeScreen() {
 
         {loading || heroMovies.length === 0 ? (
           <View>
-            <SkeletonLoader width="100%" height={400} />
+            <SkeletonLoader height={400} className="flex-1 ml-4 mr-4"/>
             <View className="p-4 space-y-4">
-              <SkeletonLoader width={200} height={24} className="mb-2" />
-              <View className="flex-row space-x-3">
+              <SkeletonLoader width={200} height={24} className="mb-3" />
+              <View className="flex-row space-x-3 gap-3">
                 {[1, 2, 3].map(i => <SkeletonLoader key={i} width={130} height={195} />)}
               </View>
             </View>

@@ -12,6 +12,7 @@ import { ContinueWatchingRow } from '../../components/ContinueWatchingRow';
 import { useRouter } from 'expo-router';
 import { useColorScheme } from 'nativewind';
 import { Moon, Sun } from 'lucide-react-native';
+import { storage } from '../../services/storage';
 
 export default function ProfileScreen() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -23,7 +24,17 @@ export default function ProfileScreen() {
   const [error, setError] = useState<string | null>(null);
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { colorScheme, toggleColorScheme } = useColorScheme();
+  const { colorScheme, toggleColorScheme, setColorScheme } = useColorScheme();
+
+  const handleToggleTheme = () => {
+    const newTheme = colorScheme === 'dark' ? 'light' : 'dark';
+    setColorScheme(newTheme);
+    try {
+      storage.set('@theme_preference', newTheme);
+    } catch (e) {
+      // Ignore
+    }
+  };
 
   useEffect(() => {
     loadData();
@@ -78,7 +89,7 @@ export default function ProfileScreen() {
           <Star color={colorScheme === 'dark' ? 'white' : 'black'} size={32} fill={colorScheme === 'dark' ? 'white' : 'black'} />
           
           <View className="flex-row items-center space-x-4">
-            <TouchableOpacity onPress={toggleColorScheme} className="flex-row items-center mr-4">
+            <TouchableOpacity onPress={handleToggleTheme} className="flex-row items-center mr-4">
               {colorScheme === 'dark' ? <Sun color="white" size={18} /> : <Moon color="black" size={18} />}
               <Text className="text-black dark:text-white text-sm ml-1 font-medium">{colorScheme === 'dark' ? 'Light' : 'Dark'}</Text>
             </TouchableOpacity>

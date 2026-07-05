@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, Dimensions, Keyboard, ActivityIndicator } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Search, X } from 'lucide-react-native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
+import { Search, X, Film } from 'lucide-react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, Dimensions, FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SkeletonLoader } from '../../components/SkeletonLoader';
+import { ErrorState } from '../../components/States';
+import { STRINGS } from '../../constants/strings';
+import { useDebounce } from '../../hooks/useDebounce';
 import { MockApi } from '../../services/mockApi';
 import { Movie } from '../../types';
-import { useDebounce } from '../../hooks/useDebounce';
-import { ErrorState } from '../../components/States';
-import { SkeletonLoader } from '../../components/SkeletonLoader';
-import { STRINGS } from '../../constants/strings';
 
 const { width } = Dimensions.get('window');
 const NUM_COLUMNS = 3;
@@ -98,14 +98,35 @@ export default function SearchScreen() {
   ), [router]);
 
   const renderEmptyState = () => {
-    if (loading || !debouncedQuery.trim() || error) return null;
+    if (loading || error) return null;
+    
+    // Initial State (No query)
+    if (!debouncedQuery.trim()) {
+      return (
+        <View className="flex-1 justify-center items-center mt-32">
+          <View className="bg-gray-100 dark:bg-gray-800 p-6 rounded-full mb-6">
+            <Film color="#4b5563" size={48} />
+          </View>
+          <Text className="text-black dark:text-white text-xl font-bold text-center px-8">
+            What are you looking for?
+          </Text>
+          <Text className="text-gray-500 text-sm text-center mt-3 px-12">
+            Search for your favorite movies, TV shows, documentaries, and more.
+          </Text>
+        </View>
+      );
+    }
+    
+    // No Results State
     return (
-      <View className="flex-1 justify-center items-center mt-20">
-        <Search color="#4b5563" size={48} className="mb-4" />
-        <Text className="text-gray-600 dark:text-gray-400 text-lg font-medium text-center px-8">
-          {STRINGS.SEARCH.NO_RESULTS_TITLE} "{debouncedQuery}".
+      <View className="flex-1 justify-center items-center mt-32">
+        <View className="bg-gray-100 dark:bg-gray-800 p-6 rounded-full mb-6">
+          <Search color="#4b5563" size={48} />
+        </View>
+        <Text className="text-black dark:text-white text-xl font-bold text-center px-8">
+          {STRINGS.SEARCH.NO_RESULTS_TITLE} "{debouncedQuery}"
         </Text>
-        <Text className="text-gray-500 text-sm text-center mt-2">
+        <Text className="text-gray-500 text-sm text-center mt-3">
           {STRINGS.SEARCH.NO_RESULTS_SUBTITLE}
         </Text>
       </View>

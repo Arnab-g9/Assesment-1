@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, StyleSheet } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Play, Plus, Share2, Heart, X, Search, Cast, ArrowLeft } from 'lucide-react-native';
-import Animated, { useAnimatedScrollHandler, useSharedValue, useAnimatedStyle, interpolate, Extrapolation } from 'react-native-reanimated';
-import { MockApi } from '../../services/mockApi';
-import { Movie } from '../../types';
-import { SkeletonLoader } from '../../components/SkeletonLoader';
-import { ErrorState } from '../../components/States';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { ArrowLeft, Cast, Heart, Play, Plus, Search, Share2 } from 'lucide-react-native';
+import { useColorScheme } from 'nativewind';
+import { useEffect, useState } from 'react';
+import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
+import Animated, { Extrapolation, interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ContentRow } from '../../components/ContentRow';
+import { SkeletonLoader } from '../../components/SkeletonLoader';
+import { ErrorState } from '../../components/States';
 import { STRINGS } from '../../constants/strings';
+import { MockApi } from '../../services/mockApi';
+import { Movie } from '../../types';
 
 const { width } = Dimensions.get('window');
 const HEADER_HEIGHT = width * 1.3;
@@ -25,6 +26,7 @@ export default function DetailScreen() {
   const [moreLikeThis, setMoreLikeThis] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { colorScheme } = useColorScheme();
 
   const scrollY = useSharedValue(0);
 
@@ -106,9 +108,9 @@ export default function DetailScreen() {
 
   if (loading || !movie) {
     return (
-      <View className="flex-1 bg-[#0f1014]">
+      <View className="flex-1 bg-white dark:bg-[#0f1014]">
         <SkeletonLoader width="100%" height={HEADER_HEIGHT} />
-        <View className="p-4 space-y-4 mt-10">
+        <View className="p-4 space-y-4 mt-10 gap-5">
           <SkeletonLoader width="80%" height={32} />
           <SkeletonLoader width="50%" height={20} />
           <SkeletonLoader width="100%" height={100} />
@@ -118,7 +120,7 @@ export default function DetailScreen() {
   }
 
   return (
-    <View className="flex-1 bg-[#0f1014]">
+    <View className="flex-1 bg-white dark:bg-[#0f1014]">
       {/* Empty space where header was */}
 
       <Animated.ScrollView 
@@ -138,27 +140,27 @@ export default function DetailScreen() {
               contentFit="cover"
             />
           </Animated.View>
-          <Text className="absolute left-4 text-white text-xs font-bold tracking-wider" style={{ top: Math.max(insets.top, 20) + 50 }}>{STRINGS.DETAIL.TRAILER_UNAVAILABLE}</Text>
+          <Text className="absolute left-4 text-black dark:text-white text-xs font-bold tracking-wider" style={{ top: Math.max(insets.top, 20) + 50 }}>{STRINGS.DETAIL.TRAILER_UNAVAILABLE}</Text>
 
           <LinearGradient
-            colors={['transparent', 'rgba(15,16,20,0.8)', '#0f1014']}
+            colors={colorScheme === 'dark' ? ['transparent', 'rgba(15,16,20,0.8)', '#0f1014'] : ['transparent', 'rgba(255,255,255,0.8)', '#ffffff']}
             style={{ position: 'absolute', bottom: 0, width: '100%', justifyContent: 'flex-end', paddingHorizontal: 16, paddingTop: 128, paddingBottom: 16, alignItems: 'center' }}
           >
             {/* Title / Logo simulation */}
-            <Text className="text-white text-4xl font-light tracking-widest mb-2 text-center uppercase">{movie.title}</Text>
+            <Text className="text-black dark:text-white text-4xl font-light tracking-widest mb-2 text-center uppercase">{movie.title}</Text>
             
             <Text className="text-blue-400 font-bold mb-3 mt-1">{STRINGS.DETAIL.NEW_RELEASE}</Text>
             
             <View className="flex-row items-center mb-6">
-              <Text className="text-gray-300 text-sm font-semibold">{movie.year}</Text>
+              <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold">{movie.year}</Text>
               <Text className="text-gray-500 mx-1">•</Text>
-              <View className="bg-gray-800 px-2 py-0.5 rounded mr-1">
-                <Text className="text-gray-300 text-xs font-bold">{movie.rating}</Text>
+              <View className="bg-gray-200 dark:bg-gray-800 px-2 py-0.5 rounded mr-1">
+                <Text className="text-gray-700 dark:text-gray-300 text-xs font-bold">{movie.rating}</Text>
               </View>
               <Text className="text-gray-500 mx-1">•</Text>
-              <Text className="text-gray-300 text-sm font-semibold">{movie.duration}</Text>
+              <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold">{movie.duration}</Text>
               <Text className="text-gray-500 mx-1">•</Text>
-              <Text className="text-gray-300 text-sm font-semibold">{STRINGS.COMMON.ENGLISH}</Text>
+              <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold">{STRINGS.COMMON.ENGLISH}</Text>
             </View>
 
             <TouchableOpacity className="bg-gray-200 rounded-lg flex-row items-center justify-center py-3 w-full mb-2">
@@ -170,27 +172,27 @@ export default function DetailScreen() {
 
         {/* Rich Metadata & Actions */}
         <View className="px-4 pb-6">
-          <Text className="text-gray-100 font-medium mb-3 text-sm text-center">
+          <Text className="text-gray-800 dark:text-gray-100 font-medium mb-3 text-sm text-center">
             {movie.genre.join('  |  ')}
           </Text>
 
-          <Text className="text-gray-400 text-sm leading-5 mb-6">
+          <Text className="text-gray-600 dark:text-gray-400 text-sm leading-5 mb-6">
             {movie.description}
           </Text>
           
           {/* Action Row */}
-          <View className="flex-row py-2 space-x-8">
-            <TouchableOpacity className="items-center">
-              <Plus color="white" size={24} className="mb-2" />
-              <Text className="text-gray-400 text-xs font-medium">{STRINGS.DETAIL.WATCHLIST}</Text>
+          <View className="flex-row py-2 space-x-8 gap-8">
+            <TouchableOpacity className="items-center gap-2">
+              <Plus color={colorScheme === 'dark' ? 'white' : 'black'} size={24} className="mb-2" />
+              <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">{STRINGS.DETAIL.WATCHLIST}</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="items-center">
-              <Share2 color="white" size={24} className="mb-2" />
-              <Text className="text-gray-400 text-xs font-medium">{STRINGS.DETAIL.SHARE}</Text>
+            <TouchableOpacity className="items-center gap-2">
+              <Share2 color={colorScheme === 'dark' ? 'white' : 'black'} size={24} className="mb-2" />
+              <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">{STRINGS.DETAIL.SHARE}</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="items-center">
-              <Heart color="white" size={24} className="mb-2" />
-              <Text className="text-gray-400 text-xs font-medium">{STRINGS.DETAIL.RATE}</Text>
+            <TouchableOpacity className="items-center gap-2">
+              <Heart color={colorScheme === 'dark' ? 'white' : 'black'} size={24} className="mb-2" />
+              <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">{STRINGS.DETAIL.RATE}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -198,21 +200,21 @@ export default function DetailScreen() {
         {/* Episodes Section */}
         {movie.isSeries && movie.episodes && (
           <View className="mt-4 px-4">
-            <View className="border-b-2 border-white self-start pb-1 mb-4">
-              <Text className="text-white text-lg font-bold">{STRINGS.DETAIL.SEASON} 1</Text>
+            <View className="border-b-2 border-black dark:border-white self-start pb-1 mb-4">
+              <Text className="text-black dark:text-white text-lg font-bold">{STRINGS.DETAIL.SEASON} 1</Text>
             </View>
             
             {movie.episodes.map((ep) => (
               <View key={ep.id} className="flex-row mb-6">
                 <View className="relative">
-                  <Image source={ep.thumbnailUrl} className="w-36 h-20 rounded-md bg-gray-800" contentFit="cover" />
+                  <Image source={ep.thumbnailUrl} className="w-36 h-20 rounded-md bg-gray-200 dark:bg-gray-800" contentFit="cover" />
                   <View className="absolute bottom-1 left-1 bg-black/60 p-1 rounded-full">
                     <Play color="white" size={12} fill="white" />
                   </View>
                 </View>
                 <View className="ml-4 justify-center flex-1">
-                  <Text className="text-white font-semibold text-base mb-1">{ep.title}</Text>
-                  <Text className="text-gray-400 text-xs font-medium">
+                  <Text className="text-black dark:text-white font-semibold text-base mb-1">{ep.title}</Text>
+                  <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">
                     S{ep.seasonNum} E{ep.episodeNum} • {ep.date} • {ep.duration}
                   </Text>
                 </View>
@@ -234,7 +236,7 @@ export default function DetailScreen() {
       >
         {/* Animated Background */}
         <Animated.View 
-          className="absolute top-0 left-0 right-0 bottom-0 bg-[#0f1014]"
+          className="absolute top-0 left-0 right-0 bottom-0 bg-white dark:bg-[#0f1014]"
           style={headerBackgroundStyle} 
         />
         
@@ -247,7 +249,7 @@ export default function DetailScreen() {
             </TouchableOpacity>
             
             <Animated.View className="flex-1" style={headerTitleStyle}>
-              <Text className="text-white text-lg font-bold" numberOfLines={1}>
+              <Text className="text-black dark:text-white text-lg font-bold" numberOfLines={1}>
                 {movie.title}
               </Text>
             </Animated.View>

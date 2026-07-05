@@ -1,56 +1,85 @@
-# Welcome to your Expo app 👋
+# House of Edtech Assessment - JioHotstar Clone
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A robust, production-ready React Native application built with **Expo Router** and **NativeWind (Tailwind CSS)**. This project meticulously replicates the core user experience, dynamic UI, and performance optimizations of the JioHotstar mobile application.
 
-## Get started
+## 🚀 Technical Architecture & Design Choices
 
-1. Install dependencies
+### Core Framework
+- **React Native & Expo (SDK 57)**: Chosen for rapid development, reliable over-the-air updates, and world-class developer experience.
+- **Expo Router**: Utilized for its modern, file-based routing architecture. It enables seamless deep linking, native stack navigation, and clean layout hierarchies (`_layout.tsx`) similar to Next.js.
 
-   ```bash
-   npm install
-   ```
+### UI & Styling
+- **NativeWind (Tailwind CSS v4)**: Replaces cumbersome StyleSheet objects with utility-first CSS classes. This accelerates UI development, drastically reduces code bloat, and provides a powerful, dynamic Theme Engine capable of switching between Light and Dark modes instantly.
+- **Lucide Icons**: Used for crisp, scalable, and modern vector iconography.
 
-2. Start the app
+### State & Data Layer
+- **Mock Service Layer**: An asynchronous `MockApi` service resolves JSON mock data to simulate real-world network fetching (complete with artificial delays). This ensures the UI is strictly data-driven and completely decoupled from hardcoded strings.
+- **Async Storage / MMKV**: Upgraded the local storage engine from `AsyncStorage` to the blazing-fast `react-native-mmkv` (via Nitro Modules) to persist user theme preferences instantly with zero asynchronous bridge overhead.
 
-   ```bash
-   npx expo start
-   ```
+### Performance Optimizations
+- **List Rendering**: Utilized `FlatList` heavily with memoized `renderItem` functions (`useCallback`), optimized `keyExtractor`s, and strict configurations (`initialNumToRender`, `windowSize`, `getItemLayout`) to ensure buttery smooth 60fps scrolling on massive lists.
+- **Memoization**: Implemented `React.memo` and `useMemo` strategically across deeply nested components (like `ContentRow`) to prevent unnecessary re-renders.
+- **Image Caching**: Integrated `expo-image` with `memory-disk` caching policies to ensure hero banners and movie posters load instantly without network stutter.
 
-In the output, you'll find options to open the app in a
+### Micro-Interactions
+- **React Native Reanimated**: Added fluid, physics-based animations to enhance UX. This includes a spring-bounce scale effect on the bottom Tab Bar icons and a staggered slide-up entrance animation for the Floating Menu.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Testing Infrastructure
+- **Jest & React Native Testing Library**: Set up a comprehensive unit testing suite to validate data extraction, search filtering logic, pagination limits, and simulated network crashes.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 🛠️ Step-by-Step Setup Instructions
 
-When you're ready, run:
+Because this project utilizes high-performance C++ native modules (like `react-native-mmkv` and `react-native-nitro-modules`), it requires a **Development Build** rather than the standard Expo Go app. 
+
+Follow these steps to run the project locally on your machine:
+
+### 1. Prerequisites
+Ensure you have the following installed on your machine:
+- **Node.js** (v18 or higher)
+- **npm** or **yarn**
+- **Xcode** (for iOS simulator) OR **Android Studio** (for Android emulator)
+- **CocoaPods** (for iOS dependencies)
+
+### 2. Install Dependencies
+Clone this repository and navigate into the project root, then install the required node modules:
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 3. Build the Native App
+Instead of `npm start`, you must compile the native code to include the MMKV C++ bridge.
 
-### Other setup steps
+**For iOS Simulator:**
+```bash
+npx expo run:ios
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+**For Android Emulator:**
+```bash
+npx expo run:android
+```
 
-## Learn more
+*Note: The first time you run this command, it will take a few minutes to download and compile the native SDKs (e.g., running `pod install` for iOS).*
 
-To learn more about developing your project with Expo, look at the following resources:
+### 4. Running the App (Subsequent Uses)
+Once the native build is installed on your simulator, you can start the Metro bundler normally without rebuilding the native code:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start -c
+```
+*(The `-c` flag clears the cache to ensure a fresh bundle).*
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## 🧪 Running Tests
+To execute the Jest unit and component test suites, simply run:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npm run test
+```
+*(Or `npx jest`)*
+
+Enjoy exploring the codebase!
