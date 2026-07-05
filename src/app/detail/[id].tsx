@@ -1,6 +1,7 @@
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useVideoPlayer, VideoView } from 'expo-video';
 import { ArrowLeft, Cast, Heart, Play, Plus, Search, Share2 } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { useEffect, useState } from 'react';
@@ -26,7 +27,20 @@ export default function DetailScreen() {
   const [moreLikeThis, setMoreLikeThis] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const { colorScheme } = useColorScheme();
+
+  const player = useVideoPlayer('https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', player => {
+    player.loop = true;
+  });
+
+  useEffect(() => {
+    if (isPlaying) {
+      player.play();
+    } else {
+      player.pause();
+    }
+  }, [isPlaying, player]);
 
   const scrollY = useSharedValue(0);
 
@@ -134,40 +148,54 @@ export default function DetailScreen() {
         <View className="relative w-full" style={{ height: HEADER_HEIGHT }}>
           
           <Animated.View className="absolute w-full h-full" style={heroImageAnimatedStyle}>
-            <Image
-              source={movie.bannerUrl}
-              className="w-full h-full"
-              contentFit="cover"
-            />
+            {isPlaying ? (
+              <VideoView
+                player={player}
+                style={{ width: '100%', height: '100%' }}
+                allowsFullscreen
+                allowsPictureInPicture
+              />
+            ) : (
+              <Image
+                source={movie.bannerUrl}
+                className="w-full h-full"
+                contentFit="cover"
+              />
+            )}
           </Animated.View>
-          <Text className="absolute left-4 text-black dark:text-white text-xs font-bold tracking-wider" style={{ top: Math.max(insets.top, 20) + 50 }}>{STRINGS.DETAIL.TRAILER_UNAVAILABLE}</Text>
 
-          <LinearGradient
-            colors={colorScheme === 'dark' ? ['transparent', 'rgba(15,16,20,0.8)', '#0f1014'] : ['transparent', 'rgba(255,255,255,0.8)', '#ffffff']}
-            style={{ position: 'absolute', bottom: 0, width: '100%', justifyContent: 'flex-end', paddingHorizontal: 16, paddingTop: 128, paddingBottom: 16, alignItems: 'center' }}
-          >
-            {/* Title / Logo simulation */}
-            <Text className="text-black dark:text-white text-4xl font-light tracking-widest mb-2 text-center uppercase">{movie.title}</Text>
-            
-            <Text className="text-blue-400 font-bold mb-3 mt-1">{STRINGS.DETAIL.NEW_RELEASE}</Text>
-            
-            <View className="flex-row items-center mb-6">
-              <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold">{movie.year}</Text>
-              <Text className="text-gray-500 mx-1">•</Text>
-              <View className="bg-gray-200 dark:bg-gray-800 px-2 py-0.5 rounded mr-1">
-                <Text className="text-gray-700 dark:text-gray-300 text-xs font-bold">{movie.rating}</Text>
+          {!isPlaying && (
+            <Text className="absolute left-4 text-black dark:text-white text-xs font-bold tracking-wider" style={{ top: Math.max(insets.top, 20) + 50 }}>{STRINGS.DETAIL.TRAILER_UNAVAILABLE}</Text>
+          )}
+
+          {!isPlaying && (
+            <LinearGradient
+              colors={colorScheme === 'dark' ? ['transparent', 'rgba(15,16,20,0.8)', '#0f1014'] : ['transparent', 'rgba(255,255,255,0.8)', '#ffffff']}
+              style={{ position: 'absolute', bottom: 0, width: '100%', justifyContent: 'flex-end', paddingHorizontal: 16, paddingTop: 128, paddingBottom: 16, alignItems: 'center' }}
+            >
+              {/* Title / Logo simulation */}
+              <Text className="text-black dark:text-white text-4xl font-light tracking-widest mb-2 text-center uppercase">{movie.title}</Text>
+              
+              <Text className="text-blue-400 font-bold mb-3 mt-1">{STRINGS.DETAIL.NEW_RELEASE}</Text>
+              
+              <View className="flex-row items-center mb-6">
+                <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold">{movie.year}</Text>
+                <Text className="text-gray-500 mx-1">•</Text>
+                <View className="bg-gray-200 dark:bg-gray-800 px-2 py-0.5 rounded mr-1">
+                  <Text className="text-gray-700 dark:text-gray-300 text-xs font-bold">{movie.rating}</Text>
+                </View>
+                <Text className="text-gray-500 mx-1">•</Text>
+                <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold">{movie.duration}</Text>
+                <Text className="text-gray-500 mx-1">•</Text>
+                <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold">{STRINGS.COMMON.ENGLISH}</Text>
               </View>
-              <Text className="text-gray-500 mx-1">•</Text>
-              <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold">{movie.duration}</Text>
-              <Text className="text-gray-500 mx-1">•</Text>
-              <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold">{STRINGS.COMMON.ENGLISH}</Text>
-            </View>
 
-            <TouchableOpacity className="bg-gray-200 rounded-lg flex-row items-center justify-center py-3 w-full mb-2">
-              <Play color="black" size={20} fill="black" className="mr-2" />
-              <Text className="text-black font-bold text-lg">{STRINGS.DETAIL.WATCH_LATEST_SEASON} <Text className="font-normal text-gray-700">S1 E1</Text></Text>
-            </TouchableOpacity>
-          </LinearGradient>
+              <TouchableOpacity onPress={() => setIsPlaying(true)} className="bg-gray-200 rounded-lg flex-row items-center justify-center py-3 w-full mb-2 gap-3">
+                <Play color="black" size={20} fill="black" className="mr-2" />
+                <Text className="text-black font-bold text-lg">{STRINGS.DETAIL.WATCH_LATEST_SEASON} <Text className="font-normal text-gray-700">S1 E1</Text></Text>
+              </TouchableOpacity>
+            </LinearGradient>
+          )}
         </View>
 
         {/* Rich Metadata & Actions */}
@@ -256,7 +284,7 @@ export default function DetailScreen() {
           </View>
           
           {/* Right Side: Cast & Search (No X anymore since we have back) */}
-          <View className="flex-row items-center space-x-4">
+          <View className="flex-row items-center space-x-4 gap-5">
             <TouchableOpacity className="bg-black/40 p-1.5 rounded-full">
               <Cast color="white" size={20} />
             </TouchableOpacity>

@@ -16,6 +16,8 @@ export default function RootLayout() {
       const savedTheme = storage.getString('@theme_preference');
       if (savedTheme === 'dark' || savedTheme === 'light') {
         setColorScheme(savedTheme);
+      } else {
+        setColorScheme('dark');
       }
     } catch (e) {
       // Ignore

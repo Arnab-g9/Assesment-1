@@ -1037,14 +1037,9 @@
   dependencies:
     debug "^4.3.4"
 
-"@expo/schema-utils@^57.0.0":
-  version "57.0.0"
-  resolved "https://registry.npmmirror.com/@expo/schema-utils/-/schema-utils-57.0.0.tgz"
-  integrity sha512-mGzjHsozMHQcQiCa5i82rDZuPqKaOwZ5skDc+AkdYiFlWLyUTG7qVmSiIfPye/ByNuWoPkfPnYr8T3aXyDB0EA==
-
-"@expo/schema-utils@^57.0.1":
+"@expo/schema-utils@^57.0.0", "@expo/schema-utils@^57.0.1":
   version "57.0.1"
-  resolved "https://registry.npmmirror.com/@expo/schema-utils/-/schema-utils-57.0.1.tgz#c687f8b32729d745c1d7644715d352d67401a8a8"
+  resolved "https://registry.npmmirror.com/@expo/schema-utils/-/schema-utils-57.0.1.tgz"
   integrity sha512-IVdaqtP3+iHFRE/y22mKijQtZanLcB18q1zi2kfN6RINTCryyzM7qHGsWHc5LBJbOuj1G4avCOECs97hOJm0GQ==
 
 "@expo/sdk-runtime-versions@^1.0.0":
@@ -3080,7 +3075,7 @@ expo-constants@~57.0.2:
 
 expo-dev-client@~57.0.5:
   version "57.0.5"
-  resolved "https://registry.npmmirror.com/expo-dev-client/-/expo-dev-client-57.0.5.tgz#f296dfb13eb247f46e3cde0841e3d2afe9cdb75b"
+  resolved "https://registry.npmmirror.com/expo-dev-client/-/expo-dev-client-57.0.5.tgz"
   integrity sha512-OOQJHb4Cf403AhZAbcZg0OOVJKLc1HArVck92LHd9PO2HuTadj/6YAlWIyXXYfeYYdjoVgLd/cAXnaEAwp6HKg==
   dependencies:
     expo-dev-launcher "~57.0.5"
@@ -3091,7 +3086,7 @@ expo-dev-client@~57.0.5:
 
 expo-dev-launcher@~57.0.5:
   version "57.0.5"
-  resolved "https://registry.npmmirror.com/expo-dev-launcher/-/expo-dev-launcher-57.0.5.tgz#33120042fb3f59509bcdc6509f259c1a32806656"
+  resolved "https://registry.npmmirror.com/expo-dev-launcher/-/expo-dev-launcher-57.0.5.tgz"
   integrity sha512-f76DIU/mF3YdDZOgwLL3A5gwb3NVIySLE5ot+gy1T0pFo6VPW3Ew7h8oyG9fQdYum58v/3LoB1uWAIhhkHhsqA==
   dependencies:
     "@expo/schema-utils" "^57.0.1"
@@ -3100,12 +3095,12 @@ expo-dev-launcher@~57.0.5:
 
 expo-dev-menu-interface@~57.0.0:
   version "57.0.0"
-  resolved "https://registry.npmmirror.com/expo-dev-menu-interface/-/expo-dev-menu-interface-57.0.0.tgz#23bd53c35d00cead3fd963a9bc3e2abf8c00467d"
+  resolved "https://registry.npmmirror.com/expo-dev-menu-interface/-/expo-dev-menu-interface-57.0.0.tgz"
   integrity sha512-F47VdzOHYc19FhI/jBgctpO8a5UskTIxG6a1E5t3W5gF8VImuvBQffdXXfLHhsuCl7dS3v3U0R45cleeVXO1Zg==
 
 expo-dev-menu@~57.0.5:
   version "57.0.5"
-  resolved "https://registry.npmmirror.com/expo-dev-menu/-/expo-dev-menu-57.0.5.tgz#b431fc31d5148503cb1e97c95927d6f1e4c7d269"
+  resolved "https://registry.npmmirror.com/expo-dev-menu/-/expo-dev-menu-57.0.5.tgz"
   integrity sha512-ITQdZBawOe7Z9aB9erLNKIM/0X1iL6VvTrC5By6ECQqTptiRLJmpeqCt1vCJ72Wz+8YeHk+n2GY5V+1yzXf5OA==
   dependencies:
     expo-dev-menu-interface "~57.0.0"
@@ -3143,7 +3138,7 @@ expo-image@~57.0.0:
 
 expo-json-utils@~57.0.0:
   version "57.0.0"
-  resolved "https://registry.npmmirror.com/expo-json-utils/-/expo-json-utils-57.0.0.tgz#2df93208694948bb3534fb77451803217d45f429"
+  resolved "https://registry.npmmirror.com/expo-json-utils/-/expo-json-utils-57.0.0.tgz"
   integrity sha512-GJMjJlS3ZRTXWkKJPXY9OjscEEyPxbvNURBJ9Gkd3KxS4Hzof+EdK8pF+3Ty4ec435ciYm9ll+IWznuVHYMiow==
 
 expo-keep-awake@~57.0.0:
@@ -3166,7 +3161,7 @@ expo-linking@~57.0.1:
 
 expo-manifests@~57.0.0:
   version "57.0.0"
-  resolved "https://registry.npmmirror.com/expo-manifests/-/expo-manifests-57.0.0.tgz#2ea2a10b2d5aaae1dd6eca2d292d5f14230740aa"
+  resolved "https://registry.npmmirror.com/expo-manifests/-/expo-manifests-57.0.0.tgz"
   integrity sha512-JDKDuF1gd3wPywhu+VzH+qFNDlu91Unqpcre6R9b14MEMq5L3mG6XL9LOySChiWlLJAoObeNPdVV7Od6P++49g==
   dependencies:
     expo-json-utils "~57.0.0"
@@ -3267,8 +3262,13 @@ expo-system-ui@~57.0.0:
 
 expo-updates-interface@~57.0.0:
   version "57.0.0"
-  resolved "https://registry.npmmirror.com/expo-updates-interface/-/expo-updates-interface-57.0.0.tgz#01c4839dd0309150fc9b9ae72bc97ef4e2111952"
+  resolved "https://registry.npmmirror.com/expo-updates-interface/-/expo-updates-interface-57.0.0.tgz"
   integrity sha512-AQASxPDpUjHG55R4WXZ5mLu0rE4F2T/JfHOsXLfZPS1A268ynHHFv+MnZ99/Gb0xWvg3ZjNTgXPEWoRCShSJJg==
+
+expo-video@~57.0.0:
+  version "57.0.0"
+  resolved "https://registry.npmmirror.com/expo-video/-/expo-video-57.0.0.tgz"
+  integrity sha512-beAFaVGS529ZiBM50tWr8g7ai/O/R+RGor4qG0JSskuyw5ME5ORgKfh6PRVBPAh43e+BuH7fCsPAt8KOEUi2MA==
 
 expo-web-browser@~57.0.0:
   version "57.0.0"
@@ -5508,7 +5508,7 @@ react-native-mmkv@^4.3.2:
 
 react-native-nitro-modules@^0.36.1:
   version "0.36.1"
-  resolved "https://registry.npmmirror.com/react-native-nitro-modules/-/react-native-nitro-modules-0.36.1.tgz#f697d96f772ce17930f15b81ad4b1e42550569ef"
+  resolved "https://registry.npmmirror.com/react-native-nitro-modules/-/react-native-nitro-modules-0.36.1.tgz"
   integrity sha512-kBv/VvKqAmkXAvP1DxJMC9b/fRhh7JdSO4EUnPP46hJjrIFeFR8AwKm8mYaKZEuF014M/TVdv2vomVUW0umsQQ==
 
 react-native-paper@^5.15.3:
