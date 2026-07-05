@@ -145,7 +145,7 @@ export default function DetailScreen() {
         scrollEventThrottle={16}
       >
         {/* Dynamic Header (Image Background) */}
-        <View className="relative w-full" style={{ height: HEADER_HEIGHT }}>
+        <View className="relative w-full overflow-hidden" style={{ height: HEADER_HEIGHT }}>
           
           <Animated.View className="absolute w-full h-full" style={heroImageAnimatedStyle}>
             {isPlaying ? (
@@ -198,62 +198,65 @@ export default function DetailScreen() {
           )}
         </View>
 
-        {/* Rich Metadata & Actions */}
-        <View className="px-4 pb-6">
-          <Text className="text-gray-800 dark:text-gray-100 font-medium mb-3 text-sm text-center">
-            {movie.genre.join('  |  ')}
-          </Text>
+        {/* Content Container */}
+        <View className="bg-white dark:bg-[#0f1014]" style={{ zIndex: 10, elevation: 10 }}>
+          {/* Rich Metadata & Actions */}
+          <View className="px-4 pb-6">
+            <Text className="text-gray-800 dark:text-gray-100 font-medium mb-3 text-sm text-center">
+              {movie.genre.join('  |  ')}
+            </Text>
 
-          <Text className="text-gray-600 dark:text-gray-400 text-sm leading-5 mb-6">
-            {movie.description}
-          </Text>
-          
-          {/* Action Row */}
-          <View className="flex-row py-2 space-x-8 gap-8">
-            <TouchableOpacity className="items-center gap-2">
-              <Plus color={colorScheme === 'dark' ? 'white' : 'black'} size={24} className="mb-2" />
-              <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">{STRINGS.DETAIL.WATCHLIST}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="items-center gap-2">
-              <Share2 color={colorScheme === 'dark' ? 'white' : 'black'} size={24} className="mb-2" />
-              <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">{STRINGS.DETAIL.SHARE}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="items-center gap-2">
-              <Heart color={colorScheme === 'dark' ? 'white' : 'black'} size={24} className="mb-2" />
-              <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">{STRINGS.DETAIL.RATE}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        
-        {/* Episodes Section */}
-        {movie.isSeries && movie.episodes && (
-          <View className="mt-4 px-4">
-            <View className="border-b-2 border-black dark:border-white self-start pb-1 mb-4">
-              <Text className="text-black dark:text-white text-lg font-bold">{STRINGS.DETAIL.SEASON} 1</Text>
-            </View>
+            <Text className="text-gray-600 dark:text-gray-400 text-sm leading-5 mb-6">
+              {movie.description}
+            </Text>
             
-            {movie.episodes.map((ep) => (
-              <View key={ep.id} className="flex-row mb-6">
-                <View className="relative">
-                  <Image source={ep.thumbnailUrl} className="w-36 h-20 rounded-md bg-gray-200 dark:bg-gray-800" contentFit="cover" />
-                  <View className="absolute bottom-1 left-1 bg-black/60 p-1 rounded-full">
-                    <Play color="white" size={12} fill="white" />
+            {/* Action Row */}
+            <View className="flex-row py-2 space-x-8 gap-8">
+              <TouchableOpacity className="items-center gap-2">
+                <Plus color={colorScheme === 'dark' ? 'white' : 'black'} size={24} className="mb-2" />
+                <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">{STRINGS.DETAIL.WATCHLIST}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity className="items-center gap-2">
+                <Share2 color={colorScheme === 'dark' ? 'white' : 'black'} size={24} className="mb-2" />
+                <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">{STRINGS.DETAIL.SHARE}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity className="items-center gap-2">
+                <Heart color={colorScheme === 'dark' ? 'white' : 'black'} size={24} className="mb-2" />
+                <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">{STRINGS.DETAIL.RATE}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          
+          {/* Episodes Section */}
+          {movie.isSeries && movie.episodes && (
+            <View className="mt-4 px-4">
+              <View className="border-b-2 border-black dark:border-white self-start pb-1 mb-4">
+                <Text className="text-black dark:text-white text-lg font-bold">{STRINGS.DETAIL.SEASON} 1</Text>
+              </View>
+              
+              {movie.episodes.map((ep) => (
+                <View key={ep.id} className="flex-row mb-6">
+                  <View className="relative">
+                    <Image source={ep.thumbnailUrl} className="w-36 h-20 rounded-md bg-gray-200 dark:bg-gray-800" contentFit="cover" />
+                    <View className="bottom-1 left-1 bg-black/60 p-1 rounded-full items-center justify-center ">
+                      <Play color="white" size={12} fill="white" />
+                    </View>
+                  </View>
+                  <View className="ml-4 justify-center flex-1">
+                    <Text className="text-black dark:text-white font-semibold text-base mb-1">{ep.title}</Text>
+                    <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">
+                      S{ep.seasonNum} E{ep.episodeNum} • {ep.date} • {ep.duration}
+                    </Text>
                   </View>
                 </View>
-                <View className="ml-4 justify-center flex-1">
-                  <Text className="text-black dark:text-white font-semibold text-base mb-1">{ep.title}</Text>
-                  <Text className="text-gray-600 dark:text-gray-400 text-xs font-medium">
-                    S{ep.seasonNum} E{ep.episodeNum} • {ep.date} • {ep.duration}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        )}
+              ))}
+            </View>
+          )}
 
-        {/* Further Scrollable Sections */}
-        <View className="mt-4">
-          <ContentRow title={STRINGS.DETAIL.MORE_LIKE_THIS} movies={moreLikeThis} onMoviePress={(id) => router.push(`/detail/${id}`)} />
+          {/* Further Scrollable Sections */}
+          <View className="mt-4">
+            <ContentRow title={STRINGS.DETAIL.MORE_LIKE_THIS} movies={moreLikeThis} onMoviePress={(id) => router.push(`/detail/${id}`)} />
+          </View>
         </View>
       </Animated.ScrollView>
 
